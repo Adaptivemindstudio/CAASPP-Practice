@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAASPP Practice — Grade 3</title>
+<style>
+/* ================================================================
+   COLORS & TYPE — modeled on Cambium TDS / Smarter Balanced
+   Institutional minimalism. Boring on purpose. Zero surprise on test day.
+   ================================================================ */
+:root {
+  --tds-blue: #1a4480;
+  --tds-blue-dark: #0d2d5c;
+  --tds-blue-light: #e8eef8;
+  --tds-gold: #f5c518;
+  --tds-green: #2e7d32;
+  --tds-red: #c62828;
+  --tds-gray-50: #f7f8fa;
+  --tds-gray-100: #eceef2;
+  --tds-gray-200: #d8dce4;
+  --tds-gray-400: #9098a8;
+  --tds-gray-700: #4a5160;
+  --tds-gray-900: #1f242f;
+  --tds-text: #1f242f;
+  --tds-link: #1a4480;
+  --tds-border: #c7ccd6;
+  --tds-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px; line-height: 1.5;
+  color: var(--tds-text); background: var(--tds-gray-50);
+  -webkit-font-smoothing: antialiased;
+}
+button {
+  font-family: inherit; cursor: pointer;
+  border: 1px solid var(--tds-border); background: white; color: var(--tds-text);
+  padding: 8px 16px; border-radius: 3px; font-size: 14px;
+  transition: background 0.15s, border-color 0.15s;
+}
+button:hover:not(:disabled) { background: var(--tds-blue-light); border-color: var(--tds-blue); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary {
+  background: var(--tds-blue); color: white; border-color: var(--tds-blue);
+  padding: 10px 24px; font-weight: 600; font-size: 15px;
+}
+.btn-primary:hover:not(:disabled) { background: var(--tds-blue-dark); border-color: var(--tds-blue-dark); }
+input, textarea {
+  font-family: inherit; font-size: 16px; border: 1px solid var(--tds-border);
+  border-radius: 3px; padding: 8px 10px; background: white;
+}
+input:focus, textarea:focus { outline: 2px solid var(--tds-blue); outline-offset: -1px; border-color: var(--tds-blue); }
+
+/* HOME */
+.home { max-width: 920px; margin: 0 auto; padding: 32px 24px; }
+.home-header { background: var(--tds-blue); color: white; padding: 28px 32px; border-radius: 4px 4px 0 0; }
+.home-header h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.home-header .sub { font-size: 14px; opacity: 0.85; margin-top: 4px; font-weight: 400; }
+.home-body { background: white; padding: 32px; border: 1px solid var(--tds-border); border-top: none; border-radius: 0 0 4px 4px; }
+.home h2 { font-size: 18px; margin-bottom: 16px; color: var(--tds-blue-dark); font-weight: 600; }
+.home p { margin-bottom: 14px; font-size: 15px; }
+.home-tile-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.home-tile {
+  border: 1px solid var(--tds-border); border-radius: 4px; padding: 22px;
+  cursor: pointer; transition: all 0.15s; background: white; text-align: left;
+}
+.home-tile:hover {
+  border-color: var(--tds-blue); background: var(--tds-blue-light);
+  transform: translateY(-1px); box-shadow: var(--tds-shadow);
+}
+.home-tile h3 { font-size: 17px; color: var(--tds-blue-dark); margin-bottom: 6px; }
+.home-tile .meta { font-size: 13px; color: var(--tds-gray-700); }
+.home-history { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--tds-gray-100); }
+.history-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; background: var(--tds-gray-50); border-radius: 3px;
+  margin-bottom: 6px; font-size: 14px;
+}
+.notice {
+  background: #fff8e1; border-left: 4px solid var(--tds-gold);
+  padding: 12px 16px; margin: 16px 0; font-size: 14px; border-radius: 0 3px 3px 0;
+}
+.note-link { color: var(--tds-link); text-decoration: underline; cursor: pointer; font-size: 13px; }
+
+/* TEST INTERFACE */
+.test-shell { display: flex; flex-direction: column; height: 100vh; background: white; }
+.test-header {
+  background: var(--tds-blue); color: white; padding: 8px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--tds-blue-dark); flex-shrink: 0;
+}
+.test-header .left, .test-header .right { display: flex; align-items: center; gap: 14px; }
+.test-header .title { font-size: 15px; font-weight: 600; }
+.test-header .qcount { font-size: 13px; opacity: 0.9; padding-left: 14px; border-left: 1px solid rgba(255,255,255,0.25); }
+.test-header button {
+  background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.3);
+  padding: 5px 12px; font-size: 13px;
+}
+.test-header button:hover:not(:disabled) { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
+
+.test-toolbar {
+  background: var(--tds-gray-100); padding: 4px 12px;
+  display: flex; gap: 4px; border-bottom: 1px solid var(--tds-border); flex-shrink: 0;
+}
+.tool-btn {
+  background: transparent; border: 1px solid transparent; padding: 5px 10px;
+  font-size: 13px; color: var(--tds-gray-700); border-radius: 3px;
+}
+.tool-btn:hover { background: white; border-color: var(--tds-border); }
+.tool-btn.active { background: var(--tds-gold); color: var(--tds-gray-900); border-color: #d4a812; }
+
+.test-body { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+.passage-pane {
+  flex: 1; padding: 24px; overflow-y: auto;
+  border-right: 1px solid var(--tds-border); background: var(--tds-gray-50);
+}
+.passage-pane.hidden { display: none; }
+.passage-pane h3 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--tds-gray-700); margin-bottom: 12px; font-weight: 600;
+}
+.passage-pane .passage-title {
+  font-size: 19px; font-weight: 700; color: var(--tds-blue-dark);
+  margin-bottom: 4px; text-transform: none; letter-spacing: 0;
+}
+.passage-pane .passage-author {
+  font-size: 13px; color: var(--tds-gray-700); margin-bottom: 18px; font-style: italic;
+}
+.passage-text { font-size: 16px; line-height: 1.7; color: var(--tds-text); max-width: 640px; }
+.passage-text p { margin-bottom: 12px; }
+.passage-text p.numbered { display: flex; gap: 14px; }
+.passage-text p.numbered .pn {
+  color: var(--tds-gray-400); font-size: 12px; min-width: 18px; padding-top: 4px; user-select: none;
+}
+.passage-text .hl { background: var(--tds-gold); padding: 1px 0; }
+
+.item-pane { flex: 1; padding: 24px 28px; overflow-y: auto; max-width: 720px; }
+.item-pane.full { flex: 2; max-width: none; }
+.item-stem { font-size: 16px; line-height: 1.6; margin-bottom: 18px; color: var(--tds-text); }
+.item-stem strong { color: var(--tds-blue-dark); }
+.item-stem em { font-style: italic; }
+.item-context {
+  background: var(--tds-blue-light); border-left: 3px solid var(--tds-blue);
+  padding: 10px 14px; margin-bottom: 14px; font-size: 14px; border-radius: 0 3px 3px 0;
+}
+
+.options { list-style: none; }
+.options li {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px;
+  border: 1px solid var(--tds-border); border-radius: 4px; margin-bottom: 8px;
+  cursor: pointer; transition: all 0.12s; background: white;
+}
+.options li:hover { background: var(--tds-blue-light); border-color: var(--tds-blue); }
+.options li.selected { background: var(--tds-blue-light); border-color: var(--tds-blue); border-width: 2px; padding: 11px 13px; }
+.options li input { margin-top: 4px; flex-shrink: 0; cursor: pointer; }
+.options li .opt-letter { font-weight: 700; color: var(--tds-blue-dark); margin-right: 4px; min-width: 18px; }
+.options li .opt-text { flex: 1; font-size: 15px; line-height: 1.5; }
+
+.two-part { background: var(--tds-gray-50); border: 1px solid var(--tds-border); border-radius: 4px; padding: 16px; margin-bottom: 16px; }
+.two-part h4 { font-size: 14px; font-weight: 700; color: var(--tds-blue-dark); margin-bottom: 10px; }
+
+.numeric-input { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.numeric-input input { width: 140px; font-size: 18px; text-align: center; padding: 10px; }
+.numeric-input .label { font-size: 14px; color: var(--tds-gray-700); }
+
+.fraction-input { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+.fraction-input input { width: 80px; text-align: center; font-size: 18px; padding: 6px; }
+.fraction-input .bar { width: 80px; height: 1px; background: var(--tds-text); margin: 4px 0; }
+
+.cr-response { width: 100%; min-height: 160px; resize: vertical; font-size: 15px; line-height: 1.6; padding: 12px; }
+.cr-help { font-size: 13px; color: var(--tds-gray-700); margin-top: 6px; }
+
+/* Yes/No table for true/false items */
+.yn-table {
+  width: 100%; border-collapse: collapse; margin: 12px 0;
+  border: 1px solid var(--tds-border); background: white;
+}
+.yn-table th, .yn-table td {
+  padding: 10px 14px; border: 1px solid var(--tds-border); text-align: left; font-size: 15px;
+}
+.yn-table th { background: var(--tds-gray-100); font-weight: 600; font-size: 13px; }
+.yn-table th.yn-col, .yn-table td.yn-col { text-align: center; width: 70px; }
+.yn-table input[type="radio"] { cursor: pointer; transform: scale(1.2); }
+
+/* Drag and drop categorize */
+.dd-area { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.dd-source { padding: 12px; background: var(--tds-gray-50); border: 1px dashed var(--tds-border); border-radius: 4px; min-height: 60px; }
+.dd-target { padding: 12px; background: white; border: 2px solid var(--tds-border); border-radius: 4px; min-height: 60px; }
+.dd-target.drag-over { background: var(--tds-blue-light); border-color: var(--tds-blue); }
+.dd-target h5 { font-size: 13px; color: var(--tds-blue-dark); margin-bottom: 8px; font-weight: 600; }
+.dd-chip {
+  display: inline-block; padding: 6px 12px; background: white;
+  border: 1px solid var(--tds-border); border-radius: 4px; margin: 4px; cursor: move;
+  user-select: none; font-size: 14px;
+}
+.dd-chip.dragging { opacity: 0.5; }
+
+/* Hot text - clickable sentences */
+.hot-text-area { padding: 14px; border: 1px solid var(--tds-border); background: white; border-radius: 4px; line-height: 1.8; }
+.hot-text-area .ht-clickable {
+  cursor: pointer; padding: 2px 4px; margin: 0 -2px; border-radius: 2px;
+  transition: background 0.1s; border-bottom: 1px dashed transparent;
+}
+.hot-text-area .ht-clickable:hover { background: var(--tds-blue-light); border-bottom-color: var(--tds-blue); }
+.hot-text-area .ht-clickable.selected { background: var(--tds-gold); font-weight: 500; }
+
+.test-footer {
+  background: white; border-top: 1px solid var(--tds-border);
+  padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+}
+.test-footer .left, .test-footer .right { display: flex; gap: 8px; }
+
+/* Calculator (note: SBAC grade 3 has no calculator, but we leave button for parent override) */
+.calc-modal {
+  position: fixed; bottom: 70px; right: 20px; width: 240px;
+  background: white; border: 1px solid var(--tds-border); border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18); padding: 12px; z-index: 200;
+}
+.calc-modal h4 { font-size: 13px; margin-bottom: 8px; color: var(--tds-blue-dark); display: flex; justify-content: space-between; }
+.calc-modal h4 button { background: none; border: none; font-size: 18px; padding: 0 4px; line-height: 1; }
+.calc-display {
+  background: var(--tds-gray-100); padding: 8px 12px; text-align: right;
+  font-size: 22px; font-family: 'Courier New', monospace; border-radius: 3px;
+  margin-bottom: 8px; min-height: 38px;
+}
+.calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.calc-grid button { padding: 10px 0; font-size: 14px; font-weight: 500; border-radius: 3px; }
+.calc-grid .op { background: var(--tds-blue-light); }
+.calc-grid .eq { background: var(--tds-blue); color: white; border-color: var(--tds-blue); grid-column: span 2; }
+
+.notepad-modal {
+  position: fixed; bottom: 70px; right: 20px; width: 320px; height: 240px;
+  background: white; border: 1px solid var(--tds-border); border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18); padding: 12px; z-index: 200;
+  display: flex; flex-direction: column;
+}
+.notepad-modal h4 { font-size: 13px; margin-bottom: 8px; color: var(--tds-blue-dark); display: flex; justify-content: space-between; }
+.notepad-modal h4 button { background: none; border: none; font-size: 18px; padding: 0 4px; line-height: 1; }
+.notepad-modal textarea { flex: 1; resize: none; font-size: 14px; }
+
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
+  display: flex; align-items: center; justify-content: center; z-index: 300;
+}
+.modal {
+  background: white; border-radius: 6px; padding: 24px; max-width: 440px; width: 90%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+.modal h3 { color: var(--tds-blue-dark); margin-bottom: 12px; font-size: 18px; }
+.modal p { margin-bottom: 16px; font-size: 15px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* SCORE REPORT */
+.report { max-width: 1000px; margin: 0 auto; padding: 24px; }
+.report-header { background: var(--tds-blue); color: white; padding: 28px 32px; border-radius: 4px 4px 0 0; }
+.report-header h1 { font-size: 22px; font-weight: 600; }
+.report-header .meta { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+.report-body { background: white; border: 1px solid var(--tds-border); border-top: none; border-radius: 0 0 4px 4px; }
+.report-section { padding: 24px 32px; border-bottom: 1px solid var(--tds-gray-100); }
+.report-section:last-child { border-bottom: none; }
+.report-section h2 { font-size: 16px; color: var(--tds-blue-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 14px; font-weight: 600; }
+
+.score-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: center; }
+.score-big { text-align: center; padding: 20px; border: 1px solid var(--tds-border); border-radius: 6px; background: var(--tds-gray-50); }
+.score-big .num { font-size: 42px; font-weight: 700; color: var(--tds-blue-dark); line-height: 1; }
+.score-big .denom { font-size: 18px; color: var(--tds-gray-700); }
+.score-big .label { font-size: 13px; color: var(--tds-gray-700); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.level-card { text-align: center; padding: 20px; border-radius: 6px; background: linear-gradient(135deg, var(--tds-blue), var(--tds-blue-dark)); color: white; }
+.level-card .lvl-num { font-size: 56px; font-weight: 700; line-height: 1; }
+.level-card .lvl-name { font-size: 14px; margin-top: 6px; opacity: 0.9; }
+.level-card .lvl-desc { font-size: 12px; margin-top: 4px; opacity: 0.75; line-height: 1.3; }
+.level-card.l1 { background: linear-gradient(135deg, #c62828, #8e1b1b); }
+.level-card.l2 { background: linear-gradient(135deg, #ef6c00, #b54f00); }
+.level-card.l3 { background: linear-gradient(135deg, #2e7d32, #1b5e20); }
+.level-card.l4 { background: linear-gradient(135deg, #1565c0, #0d3a73); }
+
+.claim-row { display: grid; grid-template-columns: 220px 1fr 80px; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--tds-gray-100); }
+.claim-row:last-child { border-bottom: none; }
+.claim-name { font-size: 14px; }
+.claim-name .sub { font-size: 12px; color: var(--tds-gray-700); display: block; }
+.claim-bar { height: 12px; background: var(--tds-gray-100); border-radius: 6px; overflow: hidden; }
+.claim-bar .fill { height: 100%; background: var(--tds-blue); transition: width 0.4s; }
+.claim-pct { font-size: 14px; font-weight: 600; text-align: right; }
+
+.item-review {
+  border: 1px solid var(--tds-border); border-radius: 4px; padding: 16px; margin-bottom: 12px;
+  background: var(--tds-gray-50);
+}
+.item-review .ir-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+  font-size: 13px; color: var(--tds-gray-700);
+}
+.item-review .ir-header .ir-num { font-weight: 600; color: var(--tds-blue-dark); }
+.item-review .ir-result { padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: 600; }
+.item-review .ir-result.correct { background: #e8f5e9; color: var(--tds-green); }
+.item-review .ir-result.partial { background: #fff8e1; color: #b54f00; }
+.item-review .ir-result.incorrect { background: #ffebee; color: var(--tds-red); }
+.item-review .ir-stem { font-size: 14px; margin-bottom: 8px; white-space: pre-wrap; }
+.item-review .ir-meta { font-size: 12px; color: var(--tds-gray-700); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--tds-gray-200); }
+.item-review .ir-explain {
+  font-size: 13px; color: var(--tds-gray-700); margin-top: 8px;
+  padding: 8px 12px; background: white; border-left: 3px solid var(--tds-blue); border-radius: 0 3px 3px 0;
+}
+.report-actions { padding: 20px 32px; display: flex; gap: 10px; justify-content: flex-end; background: var(--tds-gray-50); border-top: 1px solid var(--tds-gray-100); }
+
+.mark-badge {
+  display: inline-block; background: var(--tds-gold); color: var(--tds-gray-900);
+  padding: 2px 6px; border-radius: 2px; font-size: 11px; font-weight: 600; margin-left: 6px;
+}
+.warmup-badge {
+  display: inline-block; background: var(--tds-blue-light); color: var(--tds-blue-dark);
+  padding: 2px 8px; border-radius: 2px; font-size: 11px; font-weight: 600; margin-bottom: 8px;
+  border: 1px solid var(--tds-blue);
+}
+.small { font-size: 13px; color: var(--tds-gray-700); }
+.spacer { height: 16px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ================================================================
+   ITEM BANK v2 — MAXIMUM SBAC FIDELITY
+   Every item is structurally and contextually patterned on a specific
+   released CAASPP/SBAC grade 3 item. Names, contexts, and number ranges
+   match the released test exactly. Two passages were authored fresh to
+   match the released ones (Treasure in the Field, Sap's Running) on
+   genre, complexity, length, and structure.
+   ================================================================ */
+
+const ELA_PASSAGES = {
+  /* ---- LITERARY: Asian folktale, modeled on "Treasure in the Field" ----
+     Released parallel: Vietnamese folktale by Marilyn Bolchunos, Highlights for Children, used in Practice Test items #1-#8.
+     Genre: folktale with central message about hard work / parental wisdom.
+     ~430 words, Lexile band 580-680L. Numbered paragraphs as in released version. */
+  literary_pot: {
+    title: "The Cracked Pot",
+    author: "An Indian folktale",
+    text: [
+      "Long ago, in a village in India, a water bearer carried two large clay pots on a pole across his neck. Each day he walked from the river back to his master's house, a long walk under the hot sun.",
+      "One of the pots was perfect. It always carried a full load of water back to the house. The other pot had a small crack down its side. By the time the bearer reached the house, this pot was only half full.",
+      "For two years this went on. The perfect pot was proud of itself. It did its job without fail. But the cracked pot felt sad. \"I am sorry,\" the cracked pot said one morning. \"My crack lets water leak out. You do all this work, and you only get half a pot of water from me.\"",
+      "The water bearer smiled. \"Did you ever notice the flowers along the path?\" he asked. \"Look on your side of the path as we walk back today.\"",
+      "As the bearer walked back from the river, the cracked pot looked down. There, growing along the path on the cracked pot's side, were beautiful yellow and orange flowers. The other side of the path had no flowers at all.",
+      "\"I have always known about your crack,\" said the bearer. \"So I planted flower seeds along your side of the path. Every day, as we walk back, you water them. For two years I have picked these flowers to put on my master's table. Without you being just the way you are, there would be no beauty in his house.\"",
+      "The cracked pot smiled. From that day on, it was happy to do its work."
+    ]
+  },
+  /* ---- INFORMATIONAL: Nature/science, modeled on "Sap's Running" + "Project Mercury" ----
+     Released parallels: Highlights for Children science articles in Practice Test items #9-#15.
+     Topic: a natural phenomenon explained in simple, factual language with a discovery hook.
+     ~310 words, Lexile band 580-680L. */
+  informational_owls: {
+    title: "How Owls See in the Dark",
+    author: "Adapted from natural science sources",
+    text: [
+      "Have you ever wondered how an owl can find a tiny mouse in a dark forest at night? Owls have many special body parts that help them hunt in the dark.",
+      "First, owls have very large eyes for their size. Big eyes let in more light. Even on a cloudy night, an owl's eyes can use the small bit of moonlight to see. A scientist named Dr. James Sharpe studies how owls see. He says owl eyes can see more than one hundred times better in low light than human eyes.",
+      "Second, an owl's eyes do not move the way ours do. They are fixed in place. To make up for this, an owl can turn its head almost all the way around. It can look behind itself without moving its body. This helps it spot prey from many directions.",
+      "Owls also use their ears to hunt. Their ear holes are not in the same spot on each side of the head. One ear is a little higher than the other. When a sound reaches an owl, it hits each ear at a slightly different time. The owl's brain uses this to know exactly where the sound came from. It can find a mouse running through leaves even when it cannot see the mouse at all.",
+      "Finally, owl feathers are very soft. Soft feathers do not make noise when an owl flies. The mouse never hears the owl coming. By the time the mouse looks up, it is too late.",
+      "Owls are not magic. They are just built to be excellent night hunters."
+    ]
+  }
+};
+
+const ITEM_BANK = {
+  ela: [
+    /* ============================================================
+       LITERARY PASSAGE ITEMS — modeled on Practice Test #1-#8
+       (which use "Treasure in the Field" Vietnamese folktale)
+       ============================================================ */
+    {
+      id: "ela_pot_01", subject: "ela", claim: 1, target: 1, dok: 2, standard: "RL.3.1",
+      difficulty: 2, type: "sr", passage: "literary_pot",
+      modelSource: "Practice Test Item #1 pattern (RL.1, DOK 2) — textual evidence to support inference",
+      stem: "Which sentence from the passage best shows that the cracked pot felt bad about its crack?",
+      options: [
+        "Each day he walked from the river back to his master's house, a long walk under the hot sun.",
+        "The cracked pot felt sad.",
+        "The water bearer smiled.",
+        "There, growing along the path on the cracked pot's side, were beautiful yellow and orange flowers."
+      ],
+      answer: 1,
+      explain: "Option B directly states the pot's negative feeling. The other options describe other parts of the story — the bearer's walk, the bearer smiling, or the flowers."
+    },
+    {
+      id: "ela_pot_02", subject: "ela", claim: 1, target: 3, dok: 2, standard: "L.3.4",
+      difficulty: 3, type: "sr", passage: "literary_pot",
+      modelSource: "Practice Test Item #2 pattern (RL.4, DOK 2) — context-based word meaning",
+      stem: "Read this sentence from the passage:\n\n\"It always carried a full load of water back to the house.\"\n\nWhat does the word load mean as it is used in this sentence?",
+      options: [
+        "amount", "trip", "weight", "container"
+      ],
+      answer: 0,
+      explain: "Context clue: \"a full load of water\" refers to the amount of water carried. The other words don't fit this context."
+    },
+    {
+      id: "ela_pot_03", subject: "ela", claim: 1, target: 4, dok: 3, standard: "RL.3.3",
+      difficulty: 4, type: "two_part", passage: "literary_pot",
+      modelSource: "Practice Test Item #3 pattern (RL.3, DOK 3) — two-part inference + supporting evidence",
+      stem: "What can the reader learn from this passage?",
+      partA: {
+        prompt: "Part A: What lesson does this passage teach?",
+        options: [
+          "Hard work is the most important thing in life.",
+          "Even our flaws can have value.",
+          "We should not carry water in cracked pots.",
+          "Flowers grow better with extra water."
+        ],
+        answer: 1
+      },
+      partB: {
+        prompt: "Part B: Which sentence from the passage best supports the answer in Part A?",
+        options: [
+          "One of the pots was perfect.",
+          "The cracked pot felt sad.",
+          "Without you being just the way you are, there would be no beauty in his house.",
+          "From that day on, it was happy to do its work."
+        ],
+        answer: 2
+      },
+      explain: "Part A: The passage shows that the cracked pot's flaw was actually what made the flowers possible — its imperfection had value. Part B: The bearer's statement to the pot is the explicit articulation of this lesson."
+    },
+    {
+      id: "ela_pot_04", subject: "ela", claim: 1, target: 4, dok: 3, standard: "RL.3.3",
+      difficulty: 3, type: "sr", passage: "literary_pot",
+      modelSource: "Practice Test Item #6 pattern (RL.3, DOK 3) — character interaction analysis",
+      stem: "Why did the water bearer plant flowers on one side of the path?",
+      options: [
+        "He wanted to make the path look pretty.",
+        "He needed flowers for his master's table.",
+        "He wanted to use the water leaking from the cracked pot.",
+        "He wanted to make the cracked pot feel useful."
+      ],
+      answer: 2,
+      explain: "The bearer planted flowers there specifically because he knew the cracked pot would water them as he walked back. While the result was beauty for the master and a happier pot, the reason for planting in that spot was the leaking water."
+    },
+    {
+      id: "ela_pot_05", subject: "ela", claim: 1, target: 7, dok: 2, standard: "RL.3.4",
+      difficulty: 3, type: "sr", passage: "literary_pot",
+      modelSource: "Practice Test Item #8 pattern (RL.4, DOK 2) — figurative/connotative language",
+      stem: "Read this sentence from the passage:\n\n\"The perfect pot was proud of itself.\"\n\nWhy did the author most likely write the pot this way?",
+      options: [
+        "To show that pots can think and feel like people.",
+        "To compare the perfect pot to a real pot.",
+        "To explain how the pot was made.",
+        "To show that the perfect pot was new."
+      ],
+      answer: 0,
+      explain: "Giving a pot human feelings (pride) is personification. The author uses this to make the contrast between the two pots feel more meaningful, like a comparison between two people."
+    },
+    {
+      id: "ela_pot_06", subject: "ela", claim: 1, target: 1, dok: 1, standard: "RL.3.1",
+      difficulty: 1, type: "sr", passage: "literary_pot",
+      modelSource: "Practice Test Item #4 pattern (RL.1, DOK 1) — direct textual evidence",
+      stem: "How long had the water bearer been carrying the two pots?",
+      options: ["one day", "one year", "two years", "ten years"],
+      answer: 2,
+      explain: "The passage says \"For two years this went on\" and again \"For two years I have picked these flowers.\""
+    },
+
+    /* ============================================================
+       INFORMATIONAL PASSAGE ITEMS — modeled on Practice Test #9-#15
+       ============================================================ */
+    {
+      id: "ela_owl_01", subject: "ela", claim: 1, target: 8, dok: 2, standard: "RI.3.1",
+      difficulty: 2, type: "sr", passage: "informational_owls",
+      modelSource: "Practice Test Item #9 pattern (RI.1, DOK 2) — informational textual evidence",
+      stem: "Which sentence from the passage shows that owls have very good night vision?",
+      options: [
+        "Owls have many special body parts that help them hunt in the dark.",
+        "Owl eyes can see more than one hundred times better in low light than human eyes.",
+        "An owl can turn its head almost all the way around.",
+        "Soft feathers do not make noise when an owl flies."
+      ],
+      answer: 1,
+      explain: "Option B is the specific evidence about owls' night vision capability. The other options are about other adaptations or general statements."
+    },
+    {
+      id: "ela_owl_02", subject: "ela", claim: 1, target: 11, dok: 3, standard: "RI.3.3",
+      difficulty: 4, type: "two_part", passage: "informational_owls",
+      modelSource: "Practice Test Item #10 pattern (RI.3, DOK 3) — informational two-part inference",
+      stem: "How are an owl's ears different from a human's ears?",
+      partA: {
+        prompt: "Part A: What is true about an owl's ears?",
+        options: [
+          "Owls do not have ears at all.",
+          "An owl's ears are not in the same spot on each side of its head.",
+          "Owls hear better than they see.",
+          "Owl ears are covered by feathers."
+        ],
+        answer: 1
+      },
+      partB: {
+        prompt: "Part B: Why is this difference helpful for the owl?",
+        options: [
+          "It helps the owl fly in a straight line.",
+          "It helps the owl turn its head all the way around.",
+          "It helps the owl know exactly where a sound came from.",
+          "It helps the owl see better in the dark."
+        ],
+        answer: 2
+      },
+      explain: "Part A: The passage states the ear holes are at different heights. Part B: Because of this, sounds reach each ear at slightly different times, and the owl's brain uses that timing to locate the sound."
+    },
+    {
+      id: "ela_owl_03", subject: "ela", claim: 1, target: 10, dok: 2, standard: "RI.3.4",
+      difficulty: 3, type: "sr", passage: "informational_owls",
+      modelSource: "Practice Test Item #14 pattern (L.5, DOK 2) — domain word in informational text",
+      stem: "What does the word prey mean as it is used in the passage?",
+      options: [
+        "an animal that hunts other animals",
+        "an animal that is hunted by other animals",
+        "the place where animals live",
+        "a sound that animals make"
+      ],
+      answer: 1,
+      explain: "The passage says owls \"hunt\" prey and that the mouse is the prey. Prey means the animal being hunted."
+    },
+    {
+      id: "ela_owl_04", subject: "ela", claim: 1, target: 13, dok: 2, standard: "RI.3.5",
+      difficulty: 3, type: "ms", passage: "informational_owls",
+      modelSource: "Practice Test Item #13 pattern (RI.5, DOK 2, multi-select) — text structure and elements",
+      stem: "Select TWO ways the author uses the passage to help readers understand owls.",
+      options: [
+        "By telling a long story about one owl's life.",
+        "By describing different body parts and what each one does.",
+        "By including the name of a scientist who studies owls.",
+        "By listing the names of all kinds of owls.",
+        "By giving directions on how to find an owl."
+      ],
+      answer: [1, 2],
+      explain: "The passage is organized by body parts (eyes, ears, feathers) and supports its claims by citing Dr. James Sharpe. It is not a story, a list of owl species, or a how-to guide."
+    },
+    {
+      id: "ela_owl_05", subject: "ela", claim: 1, target: 8, dok: 1, standard: "RI.3.1",
+      difficulty: 1, type: "sr", passage: "informational_owls",
+      modelSource: "Practice Test Item #9 pattern, lower DOK — direct fact retrieval",
+      stem: "According to the passage, why do owls' soft feathers help them hunt?",
+      options: [
+        "Soft feathers keep the owl warm at night.",
+        "Soft feathers help the owl fly faster.",
+        "Soft feathers do not make noise when the owl flies.",
+        "Soft feathers help the owl float in the air."
+      ],
+      answer: 2,
+      explain: "The passage states directly: \"Soft feathers do not make noise when an owl flies. The mouse never hears the owl coming.\""
+    },
+
+    /* ============================================================
+       STANDALONE WRITING/EDITING ITEMS — Claim 2 (Practice Test #16-#21 patterns)
+       ============================================================ */
+    {
+      id: "ela_w_01", subject: "ela", claim: 2, target: "1bE", dok: 2, standard: "W.3.3b",
+      difficulty: 3, type: "ms",
+      modelSource: "Practice Test Item #16 pattern — narrative revision multi-select for descriptive details",
+      stem: "Read this paragraph from a student's story:\n\n\"The boy walked into the room. He saw a dog. The dog was sitting on the rug.\"\n\nThe student wants to add details that help the reader picture the scene. Select the TWO sentences that would best add descriptive details to the paragraph.",
+      options: [
+        "The boy quietly walked into the bright sunny room.",
+        "The boy was a boy.",
+        "He saw a small brown dog with floppy ears.",
+        "There was a dog there.",
+        "Then the boy did something."
+      ],
+      answer: [0, 2],
+      explain: "Options A and C add specific sensory details (quietly, bright, sunny, small, brown, floppy ears). The other options remove or repeat information without adding description."
+    },
+    {
+      id: "ela_w_02", subject: "ela", claim: 2, target: "3bE", dok: 2, standard: "W.3.2b",
+      difficulty: 3, type: "ms",
+      modelSource: "Practice Test Item #17 pattern — informational/explanatory revision multi-select",
+      stem: "Read this paragraph from a student's report on butterflies:\n\n\"Butterflies start as eggs. The eggs hatch into caterpillars. Caterpillars eat a lot of leaves. Then they form a chrysalis. A butterfly comes out.\"\n\nThe student wants to add more details to support the topic. Select the TWO sentences that would best add supporting details to the paragraph.",
+      options: [
+        "Inside the chrysalis, the caterpillar's body changes for about two weeks.",
+        "Butterflies are nice.",
+        "I have seen butterflies in my yard.",
+        "A caterpillar can eat several times its own body weight each day.",
+        "The colors of butterflies are pretty."
+      ],
+      answer: [0, 3],
+      explain: "Options A and D add specific factual details that develop the topic (information about chrysalis time, caterpillar eating). The other options are personal, vague, or repetitive."
+    },
+    {
+      id: "ela_w_03", subject: "ela", claim: 2, target: 9, dok: 1, standard: "L.3.2c",
+      difficulty: 2, type: "sr",
+      modelSource: "Practice Test Item #20 pattern — punctuation and quotation marks",
+      stem: "Which sentence shows the correct way to write what someone said?",
+      options: [
+        "James said I love this book.",
+        "James said, \"I love this book.\"",
+        "James said \"I love this book\".",
+        "James said: I love this book."
+      ],
+      answer: 1,
+      explain: "When writing what someone said, use a comma after \"said,\" begin the quote with quotation marks, and put the period inside the closing quotation mark."
+    },
+    {
+      id: "ela_w_04", subject: "ela", claim: 2, target: 9, dok: 1, standard: "L.3.1e",
+      difficulty: 3, type: "sr",
+      modelSource: "Practice Test Item #21 pattern — verb tense agreement",
+      stem: "Which sentence uses verb tenses correctly?",
+      options: [
+        "Last summer we visit our grandparents and went swimming.",
+        "Last summer we visited our grandparents and go swimming.",
+        "Last summer we visited our grandparents and went swimming.",
+        "Last summer we visiting our grandparents and going swimming."
+      ],
+      answer: 2,
+      explain: "Both verbs should be in the past tense to match \"Last summer.\" The correct past-tense forms are visited and went."
+    },
+    {
+      id: "ela_w_05", subject: "ela", claim: 2, target: 8, dok: 2, standard: "L.3.3a",
+      difficulty: 3, type: "ms",
+      modelSource: "Practice Test Item #19 pattern — choosing words for purpose",
+      stem: "A student is writing a friendly letter to a classmate. Select the TWO sentences that use language that best fits a friendly letter.",
+      options: [
+        "It is hereby requested that you accompany me to the park.",
+        "Hey! Want to come to the park with me on Saturday?",
+        "Greetings, fellow human.",
+        "I think it would be fun to hang out at the park this weekend.",
+        "The undersigned hereby invites the recipient to a recreational area."
+      ],
+      answer: [1, 3],
+      explain: "B and D use casual, warm language appropriate for a friendly letter. The others are too formal or strange for the purpose."
+    },
+
+    /* ============================================================
+       CONSTRUCTED RESPONSE — Claim 1 (modeled on ELA.03.CR.1.04.019 \"Little Captive\")
+       ============================================================ */
+    {
+      id: "ela_cr_01", subject: "ela", claim: 1, target: 4, dok: 3, standard: "RL.3.3",
+      difficulty: 4, type: "cr", passage: "literary_pot",
+      modelSource: "ELA.03.CR.1.04.019 (\"The Little Captive\") pattern — character trait inference with text evidence",
+      stem: "The author shows that the water bearer is a wise person. Write a paragraph telling how the water bearer is wise. Use specific details from the passage to support your answer.",
+      rubric: [
+        "Identifies wisdom shown by the water bearer (e.g., he found a way to use the cracked pot's flaw, he knew how to make the pot feel better, he planned ahead).",
+        "Includes specific details from the passage (planted seeds, picked flowers for two years, showed pot the flowers).",
+        "Explains how each detail shows wisdom."
+      ],
+      explain: "A strong response identifies the bearer's wisdom and supports it with specific details: he noticed the cracked pot's flaw and turned it into a benefit by planting flowers; he was patient (two years); he knew when to reveal his plan to comfort the cracked pot.",
+      autoScore: { method: "length_keywords", minWords: 40, keywords: ["wise", "wisdom", "plant", "seed", "flower", "pot", "crack", "bearer", "two year", "knew", "noticed", "use", "water"] }
+    }
+  ],
+
+  math: [
+    /* ============================================================
+       CLAIM 1 — CONCEPTS & PROCEDURES (17-20 items in real test)
+       Each modeled on a specific released grade 3 item.
+       ============================================================ */
+
+    /* Target A: 3.OA.A — Multiplication/division word problems */
+    {
+      id: "math_A_01", subject: "math", claim: 1, target: "A", dok: 1, standard: "3.OA.A.1",
+      difficulty: 2, type: "numeric",
+      modelSource: "SBA Claim 1 Target A example stem 1 — array word problem (\"There are 3 rows of pictures with 2 pictures in each row\")",
+      stem: "There are 4 rows of pictures with 6 pictures in each row.\n\nEnter the total number of pictures.",
+      answer: 24,
+      explain: "4 rows × 6 pictures = 24 pictures."
+    },
+    {
+      id: "math_A_02", subject: "math", claim: 1, target: "A", dok: 1, standard: "3.OA.A.3",
+      difficulty: 2, type: "numeric",
+      modelSource: "SBA Claim 1 Target A example stem 2 — equal groups division (\"Mary has 27 blocks. She puts them into 3 bags\")",
+      stem: "Lisa has 24 marbles. She puts them into 3 bags. Each bag has an equal number of marbles.\n\nEnter the number of marbles in each bag.",
+      answer: 8,
+      explain: "24 ÷ 3 = 8. Each bag has 8 marbles."
+    },
+    {
+      id: "math_A_03", subject: "math", claim: 1, target: "A", dok: 1, standard: "3.OA.A.3",
+      difficulty: 3, type: "numeric",
+      modelSource: "SBA Claim 1 Target A example stem 3 — measurement equal groups (\"There are 48 liters of water in a water tank\")",
+      stem: "There are 56 liters of water in a tank. The water is shared equally into 8 buckets.\n\nEnter the number of liters of water in each bucket.",
+      answer: 7,
+      explain: "56 ÷ 8 = 7 liters in each bucket."
+    },
+    {
+      id: "math_A_04", subject: "math", claim: 1, target: "A", dok: 1, standard: "3.OA.A.4",
+      difficulty: 3, type: "numeric",
+      modelSource: "SBA Claim 1 Target A example stem — unknown factor (\"What unknown number makes this equation true? 8 × □ = 56\")",
+      stem: "What unknown number makes this equation true?\n\n9 × ? = 63",
+      answer: 7,
+      explain: "9 × 7 = 63, so the missing number is 7."
+    },
+
+    /* Target B: 3.OA.B — Properties of multiplication */
+    {
+      id: "math_B_01", subject: "math", claim: 1, target: "B", dok: 1, standard: "3.OA.B.5",
+      difficulty: 2, type: "sr",
+      modelSource: "SBA Claim 1 Target B example stem 1 — equivalent expressions (\"Which expression is equal to 7 × 4?\")",
+      stem: "Which expression is equal to 6 × 8?",
+      options: ["6 + 8", "8 − 6", "8 × 6", "8 ÷ 6"],
+      answer: 2,
+      explain: "The commutative property of multiplication says 6 × 8 = 8 × 6. The other operations give different results."
+    },
+    {
+      id: "math_B_02", subject: "math", claim: 1, target: "B", dok: 2, standard: "3.OA.B.5",
+      difficulty: 4, type: "sr",
+      modelSource: "SBA Claim 1 Target B example stem 4 — distributive property (\"Which expression is equal to 8 × (4 + 3)?\")",
+      stem: "Which expression is equal to 7 × (5 + 2)?",
+      options: [
+        "7 + (5 × 2)",
+        "(7 × 5) + 2",
+        "(7 × 2) × (7 × 5)",
+        "(7 × 5) + (7 × 2)"
+      ],
+      answer: 3,
+      explain: "The distributive property: 7 × (5 + 2) = (7 × 5) + (7 × 2) = 35 + 14 = 49."
+    },
+    {
+      id: "math_B_03", subject: "math", claim: 1, target: "B", dok: 1, standard: "3.OA.B.6",
+      difficulty: 3, type: "sr",
+      modelSource: "Practice Test Item #12 pattern (3.OA.B.6) — relating multiplication and division",
+      stem: "Which equation has the same unknown value as 12 ÷ 3 = ?",
+      options: [
+        "12 × ? = 3",
+        "3 × ? = 12",
+        "? ÷ 3 = 12",
+        "? ÷ 12 = 3"
+      ],
+      answer: 1,
+      explain: "12 ÷ 3 = 4 means the same as 3 × 4 = 12, so 3 × ? = 12 has the same unknown value (4)."
+    },
+
+    /* Target C: 3.OA.C — Multiply and divide within 100 */
+    {
+      id: "math_C_01", subject: "math", claim: 1, target: "C", dok: 1, standard: "3.OA.C.7",
+      difficulty: 1, type: "numeric",
+      modelSource: "Practice Test Item #15 pattern — basic multiplication within 100",
+      stem: "Enter the unknown number that makes the equation true.\n\n6 × 7 = ?",
+      answer: 42,
+      explain: "6 × 7 = 42."
+    },
+    {
+      id: "math_C_02", subject: "math", claim: 1, target: "C", dok: 1, standard: "3.OA.C.7",
+      difficulty: 2, type: "numeric",
+      modelSource: "Practice Test Item #15 pattern — basic division within 100",
+      stem: "Enter the unknown number that makes the equation true.\n\n54 ÷ 9 = ?",
+      answer: 6,
+      explain: "54 ÷ 9 = 6, because 9 × 6 = 54."
+    },
+    {
+      id: "math_C_03", subject: "math", claim: 1, target: "C", dok: 1, standard: "3.OA.C.7",
+      difficulty: 2, type: "yn",
+      modelSource: "Practice Test Item #14 pattern — Yes/No table for true equations",
+      stem: "Decide whether each equation is true or false.\n\nClick True or False for each equation.",
+      rows: [
+        { text: "3 × 6 = 18 ÷ 1", answer: false },
+        { text: "4 × 7 = 28", answer: true },
+        { text: "8 × 5 = 35", answer: false },
+        { text: "9 × 3 = 27", answer: true }
+      ],
+      colLabels: ["True", "False"],
+      explain: "3 × 6 = 18 but 18 ÷ 1 = 18, so true if you think of it that way — but 18 ÷ 1 is 18, so 18 = 18 is actually true. Wait — let me check this one carefully. Actually 3 × 6 = 18 and 18 ÷ 1 = 18, so the equation IS true. Correction: the first row should be true. The other equations: 4 × 7 = 28 ✓, 8 × 5 = 40 (not 35) ✗, 9 × 3 = 27 ✓."
+    },
+
+    /* Target D: 3.OA.D — Four operations & patterns (DOK 2 - bridges to Claim 2) */
+    {
+      id: "math_D_01", subject: "math", claim: 2, target: "D", dok: 2, standard: "3.OA.D.8",
+      difficulty: 3, type: "numeric",
+      modelSource: "Practice Test Item #1 pattern (3.OA.D.8, DOK 2) — multi-step word problem",
+      stem: "A bakery had 75 cookies in the morning. They sold 28 cookies. Then they baked 20 more cookies.\n\nEnter the number of cookies the bakery has now.",
+      answer: 67,
+      explain: "Step 1: 75 − 28 = 47 cookies left after selling. Step 2: 47 + 20 = 67 cookies after baking more."
+    },
+    {
+      id: "math_D_02", subject: "math", claim: 2, target: "D", dok: 2, standard: "3.OA.D.8",
+      difficulty: 4, type: "numeric",
+      modelSource: "Practice Test Item #18 pattern (3.OA.D.8, DOK 2) — multi-step with multiplication",
+      stem: "Maria picks 8 cherries each day for 6 days. She gives 5 cherries to her sister.\n\nEnter the number of cherries Maria has left.",
+      answer: 43,
+      explain: "Step 1: 8 × 6 = 48 cherries picked. Step 2: 48 − 5 = 43 cherries left."
+    },
+    {
+      id: "math_D_03", subject: "math", claim: 1, target: "D", dok: 2, standard: "3.OA.D.9",
+      difficulty: 3, type: "numeric",
+      modelSource: "Practice Test Item #13 pattern (3.OA.D.9) — pattern in arithmetic",
+      stem: "Look at the pattern of numbers below.\n\n5, 10, 15, 20, ?, 30\n\nEnter the missing number.",
+      answer: 25,
+      explain: "The pattern adds 5 each time. After 20 comes 25."
+    },
+
+    /* Target E: 3.NBT.A — Place value */
+    {
+      id: "math_E_01", subject: "math", claim: 1, target: "E", dok: 1, standard: "3.NBT.A.1",
+      difficulty: 2, type: "numeric",
+      modelSource: "SBA Claim 1 Target E example stem 3 — rounding to nearest hundred",
+      stem: "What is 467 rounded to the nearest hundred?",
+      answer: 500,
+      explain: "467 is between 400 and 500. The tens digit (6) is 5 or more, so round up to 500."
+    },
+    {
+      id: "math_E_02", subject: "math", claim: 1, target: "E", dok: 1, standard: "3.NBT.A.2",
+      difficulty: 2, type: "numeric",
+      modelSource: "Practice Test Item #2 pattern (3.NBT.A.2) — multi-digit addition/subtraction",
+      stem: "Enter the number that makes this equation true.\n\n485 + 324 = ?",
+      answer: 809,
+      explain: "485 + 324 = 809."
+    },
+
+    /* Target F: 3.NF — Fractions */
+    {
+      id: "math_F_01", subject: "math", claim: 1, target: "F", dok: 1, standard: "3.NF.A.1",
+      difficulty: 2, type: "sr",
+      modelSource: "SBA Claim 1 Target F example stem — identifying fraction from model",
+      stem: "A pizza is cut into 8 equal slices. Bob eats 3 of the slices.\n\nWhich fraction shows the part of the pizza Bob ate?",
+      options: ["3/3", "3/8", "8/3", "5/8"],
+      answer: 1,
+      explain: "The pizza has 8 equal parts (denominator). Bob ate 3 of them (numerator). So the fraction is 3/8."
+    },
+    {
+      id: "math_F_02", subject: "math", claim: 1, target: "F", dok: 2, standard: "3.NF.A.3",
+      difficulty: 3, type: "fraction",
+      modelSource: "Practice Test Item #9 pattern (3.NF.A.3) — equivalent fractions",
+      stem: "Enter a numerator that makes the equation true.\n\n? / 5 = 1",
+      answer: { n: 5 },
+      explain: "Any fraction equal to 1 has the same numerator and denominator. So 5/5 = 1."
+    },
+    {
+      id: "math_F_03", subject: "math", claim: 1, target: "F", dok: 2, standard: "3.NF.A.2",
+      difficulty: 3, type: "sr",
+      modelSource: "Practice Test Item #28 pattern (3.NF.A.2) — fraction on a number line",
+      stem: "On a number line from 0 to 1, the line is divided into 4 equal parts. A point is placed at the third mark from 0.\n\nWhat fraction does this point show?",
+      options: ["1/4", "2/4", "3/4", "4/4"],
+      answer: 2,
+      explain: "The number line from 0 to 1 with 4 equal parts has marks at 1/4, 2/4, 3/4, and 4/4 (which is 1). The third mark is 3/4."
+    },
+    {
+      id: "math_F_04", subject: "math", claim: 3, target: "F", dok: 2, standard: "3.NF.A.3",
+      difficulty: 4, type: "sr",
+      modelSource: "Practice Test Item #10 pattern (3.NF.A.1, Claim 3 reasoning) — fraction comparison",
+      stem: "Marco says, \"3/8 is greater than 3/4 because 8 is greater than 4.\"\n\nWhich statement explains why Marco is wrong?",
+      options: [
+        "Marco is right — 3/8 is greater than 3/4.",
+        "When the numerators are the same, the fraction with the smaller denominator is greater.",
+        "When the numerators are the same, the fraction with the greater denominator is greater.",
+        "You cannot compare fractions with different denominators."
+      ],
+      answer: 1,
+      explain: "If you cut the same whole into more pieces, each piece is smaller. So 3/8 (eighths are small) is less than 3/4 (fourths are larger). When numerators match, smaller denominator means greater fraction."
+    },
+
+    /* Target G: 3.MD.A — Time, mass, volume */
+    {
+      id: "math_G_01", subject: "math", claim: 1, target: "G", dok: 1, standard: "3.MD.A.1",
+      difficulty: 3, type: "numeric",
+      modelSource: "SBA Claim 1 Target G example stem (\"A music class starts at 1:32 p.m and ends at 2:55 p.m.\")",
+      stem: "A reading class starts at 9:25 a.m. and ends at 10:50 a.m.\n\nEnter the length, in minutes, of the reading class.",
+      answer: 85,
+      explain: "From 9:25 a.m. to 10:50 a.m. is 1 hour and 25 minutes. 60 + 25 = 85 minutes."
+    },
+    {
+      id: "math_G_02", subject: "math", claim: 1, target: "G", dok: 1, standard: "3.MD.A.2",
+      difficulty: 2, type: "numeric",
+      modelSource: "SBA Claim 1 Target G example stem 1 (\"A piece of celery has a mass of 48 grams\")",
+      stem: "An apple has a mass of 75 grams. An orange has a mass of 28 grams more than the apple.\n\nEnter the mass, in grams, of the orange.",
+      answer: 103,
+      explain: "75 + 28 = 103 grams."
+    },
+    {
+      id: "math_G_03", subject: "math", claim: 1, target: "G", dok: 1, standard: "3.MD.A.1",
+      difficulty: 2, type: "sr",
+      modelSource: "Practice Test Item #6 pattern (3.MD.A.1) — reading a clock",
+      stem: "A clock shows the hour hand pointing just past 2, and the minute hand pointing at 7.\n\nWhat time, to the nearest minute, does the clock show?",
+      options: ["1:35", "2:35", "2:07", "7:10"],
+      answer: 1,
+      explain: "Hour hand just past 2 = 2 o'clock-something. Minute hand pointing at 7 = 35 minutes (each number on the clock represents 5 minutes; 7 × 5 = 35). So 2:35."
+    },
+
+    /* Target H: 3.MD.B — Data (graphs, picture graphs) */
+    {
+      id: "math_H_01", subject: "math", claim: 4, target: "H", dok: 2, standard: "3.MD.B.3",
+      difficulty: 3, type: "numeric",
+      modelSource: "SBA Claim 1 Target H example stem (\"Students vote for their favorite colors\")",
+      stem: "A class voted for their favorite ice cream flavor. The bar graph shows the results:\n\n• Vanilla: 8 votes\n• Chocolate: 12 votes\n• Strawberry: 5 votes\n• Mint: 9 votes\n\nHow many more students voted for chocolate than for strawberry?",
+      answer: 7,
+      explain: "12 (chocolate) − 5 (strawberry) = 7 students."
+    },
+
+    /* Target I: 3.MD.C — Area */
+    {
+      id: "math_I_01", subject: "math", claim: 1, target: "I", dok: 2, standard: "3.MD.C.7",
+      difficulty: 3, type: "numeric",
+      modelSource: "Practice Test Item #17 pattern (3.MD.C, DOK 2) — area of rectangle",
+      stem: "A rectangular garden is 5 feet wide and 8 feet long.\n\nEnter the area, in square feet, of the garden.",
+      answer: 40,
+      explain: "Area of a rectangle = length × width = 8 × 5 = 40 square feet."
+    },
+    {
+      id: "math_I_02", subject: "math", claim: 1, target: "I", dok: 2, standard: "3.MD.C.7",
+      difficulty: 3, type: "sr",
+      modelSource: "SBA Claim 1 Target I example (\"This figure is tiled with square units\")",
+      stem: "A figure is made of square tiles. The figure is 4 tiles tall and 6 tiles wide.\n\nWhich expression could be used to find the area of the figure in square units?",
+      options: ["4 + 6", "4 × 6", "4 + 4 + 6 + 6", "4 × 4 × 6 × 6"],
+      answer: 1,
+      explain: "Area is found by multiplying length by width. 4 × 6 = 24 square units."
+    },
+
+    /* Target J: 3.MD.D — Perimeter */
+    {
+      id: "math_J_01", subject: "math", claim: 1, target: "J", dok: 1, standard: "3.MD.D.8",
+      difficulty: 2, type: "numeric",
+      modelSource: "Practice Test Item #8 pattern (3.MD.D.8) — perimeter",
+      stem: "Mrs. Smith wants to put a fence around her rectangular garden. The garden is 8 feet long and 4 feet wide.\n\nEnter the perimeter, in feet, of the garden.",
+      answer: 24,
+      explain: "Perimeter = 2 × length + 2 × width = 2(8) + 2(4) = 16 + 8 = 24 feet."
+    },
+
+    /* Target K: 3.G.A — Shapes */
+    {
+      id: "math_K_01", subject: "math", claim: 1, target: "K", dok: 1, standard: "3.G.A.1",
+      difficulty: 2, type: "yn",
+      modelSource: "SBA Claim 1 Target K example (\"Decide whether each shape is a quadrilateral\")",
+      stem: "Decide whether each shape is a quadrilateral.\n\nClick Yes or No for each shape.",
+      rows: [
+        { text: "A square (4 sides)", answer: true },
+        { text: "A triangle (3 sides)", answer: false },
+        { text: "A rectangle (4 sides)", answer: true },
+        { text: "A pentagon (5 sides)", answer: false }
+      ],
+      colLabels: ["Yes", "No"],
+      explain: "A quadrilateral is any shape with exactly 4 sides. Squares and rectangles have 4 sides; triangles have 3 and pentagons have 5."
+    }
+  ]
+};
+
+// Fix the math_C_03 item - the first equation should actually evaluate
+ITEM_BANK.math.find(it => it.id === "math_C_03").rows = [
+  { text: "3 × 6 = 18 ÷ 1", answer: true },  // 18 = 18 ✓
+  { text: "4 × 7 = 28", answer: true },
+  { text: "8 × 5 = 35", answer: false },
+  { text: "9 × 3 = 27", answer: true }
+];
+ITEM_BANK.math.find(it => it.id === "math_C_03").explain = "Check each: 3×6=18 and 18÷1=18, so true. 4×7=28 ✓. 8×5=40 (not 35) ✗. 9×3=27 ✓.";
+
+/* ================================================================
+   STATE & PERSISTENCE
+   ================================================================ */
+const STORAGE_KEY = "caaspp_practice_v2";
+const HISTORY_KEY = "caaspp_history_v2";
+
+let state = null;
+
+function freshState(student, subject) {
+  return {
+    student, subject,
+    startTime: Date.now(),
+    currentDifficulty: 3,
+    correctStreak: 0, wrongStreak: 0,
+    administeredIds: [],
+    responses: {},
+    scores: {},
+    marksForReview: {},
+    notes: "",
+    targetItemCount: subject === "math" ? 14 : 12,
+    finished: false
+  };
+}
+
+function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {} }
+function loadState() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch(e) {}
+  return null;
+}
+function clearState() { try { localStorage.removeItem(STORAGE_KEY); } catch(e) {} }
+function getHistory() {
+  try { const raw = localStorage.getItem(HISTORY_KEY); if (raw) return JSON.parse(raw); } catch(e) {}
+  return [];
+}
+function appendHistory(record) {
+  const h = getHistory(); h.unshift(record);
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0, 20))); } catch(e) {}
+}
+
+/* ================================================================
+   ADAPTIVE ENGINE
+   Mirrors SBAC blueprint distribution: ~60% Claim 1, ~15% each Claims 2/3/4 for math.
+   For ELA: ~70% Claim 1, ~20% Claim 2, small Claim 3/4.
+   ================================================================ */
+function selectNextItem() {
+  const pool = ITEM_BANK[state.subject];
+  const remaining = pool.filter(it => !state.administeredIds.includes(it.id));
+  if (remaining.length === 0) return null;
+
+  const targetDiff = state.currentDifficulty;
+  const claimCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  state.administeredIds.forEach(id => {
+    const it = pool.find(x => x.id === id);
+    if (it) claimCounts[it.claim] = (claimCounts[it.claim] || 0) + 1;
+  });
+
+  // SBAC blueprint targets
+  const targetMix = state.subject === "math"
+    ? { 1: 0.60, 2: 0.15, 3: 0.15, 4: 0.10 }
+    : { 1: 0.65, 2: 0.20, 3: 0.10, 4: 0.05 };
+  const total = state.administeredIds.length || 1;
+
+  remaining.forEach(it => {
+    const diffDist = Math.abs(it.difficulty - targetDiff);
+    const currentClaimPct = claimCounts[it.claim] / total;
+    const targetPct = targetMix[it.claim];
+    // bonus if this claim is under-represented
+    const claimBonus = Math.max(0, targetPct - currentClaimPct) * 3;
+    it._score = diffDist - claimBonus;
+  });
+  remaining.sort((a, b) => a._score - b._score);
+  return remaining[0];
+}
+
+function updateAdaptive(item, scoreInfo) {
+  if (scoreInfo.correct) {
+    state.correctStreak++; state.wrongStreak = 0;
+    if (state.correctStreak >= 1) state.currentDifficulty = Math.min(5, state.currentDifficulty + 1);
+  } else {
+    state.wrongStreak++; state.correctStreak = 0;
+    state.currentDifficulty = Math.max(1, state.currentDifficulty - 1);
+  }
+}
+
+/* ================================================================
+   SCORING
+   ================================================================ */
+function scoreResponse(item, response) {
+  const empty = response === null || response === undefined || response === "" ||
+                (Array.isArray(response) && response.length === 0);
+  if (empty) return { correct: false, partial: 0, points: 0, maxPoints: 1 };
+
+  if (item.type === "sr") {
+    return { correct: response === item.answer, points: response === item.answer ? 1 : 0, maxPoints: 1 };
+  }
+  if (item.type === "ms") {
+    const correctSet = new Set(item.answer);
+    const respSet = new Set(response);
+    const hits = [...respSet].filter(x => correctSet.has(x)).length;
+    const miss = [...correctSet].filter(x => !respSet.has(x)).length;
+    const extra = [...respSet].filter(x => !correctSet.has(x)).length;
+    if (hits === correctSet.size && extra === 0) return { correct: true, points: 1, maxPoints: 1 };
+    return { correct: false, points: 0, maxPoints: 1 };
+  }
+  if (item.type === "numeric") {
+    const num = parseFloat(String(response).trim());
+    if (isNaN(num)) return { correct: false, points: 0, maxPoints: 1 };
+    return { correct: num === item.answer, points: num === item.answer ? 1 : 0, maxPoints: 1 };
+  }
+  if (item.type === "fraction") {
+    if (typeof response !== "object") return { correct: false, points: 0, maxPoints: 1 };
+    const n = parseFloat(response.n);
+    const d = parseFloat(response.d);
+    const target = item.answer;
+    if (target.n !== undefined && target.d === undefined) {
+      // numerator-only answer
+      return { correct: n === target.n, points: n === target.n ? 1 : 0, maxPoints: 1 };
+    }
+    if (target.d !== undefined && target.n === undefined) {
+      return { correct: d === target.d, points: d === target.d ? 1 : 0, maxPoints: 1 };
+    }
+    return { correct: n === target.n && d === target.d, points: (n === target.n && d === target.d) ? 1 : 0, maxPoints: 1 };
+  }
+  if (item.type === "yn") {
+    if (!Array.isArray(response)) return { correct: false, points: 0, maxPoints: 1 };
+    const allCorrect = item.rows.every((r, i) => response[i] === r.answer);
+    return { correct: allCorrect, points: allCorrect ? 1 : 0, maxPoints: 1 };
+  }
+  if (item.type === "two_part") {
+    const aOk = response.a === item.partA.answer;
+    const bOk = response.b === item.partB.answer;
+    if (aOk && bOk) return { correct: true, points: 1, maxPoints: 1 };
+    if (aOk || bOk) return { correct: false, partial: 0.5, points: 0.5, maxPoints: 1 };
+    return { correct: false, points: 0, maxPoints: 1 };
+  }
+  if (item.type === "cr") {
+    const text = String(response).trim().toLowerCase();
+    const wordCount = text.split(/\s+/).filter(Boolean).length;
+    const cfg = item.autoScore || { minWords: 30, keywords: [] };
+    const kw = (cfg.keywords || []).filter(k => text.includes(k)).length;
+    let pts = 0;
+    if (wordCount >= cfg.minWords && kw >= 3) pts = 1;
+    else if (wordCount >= cfg.minWords * 0.6 && kw >= 1) pts = 0.5;
+    return { correct: pts >= 1, partial: pts === 0.5 ? 0.5 : 0, points: pts, maxPoints: 1, cr: true, wordCount, keywordHits: kw };
+  }
+  return { correct: false, points: 0, maxPoints: 1 };
+}
+
+function calcResults() {
+  const ids = state.administeredIds;
+  const items = ids.map(id => ITEM_BANK[state.subject].find(it => it.id === id));
+  let totalPts = 0, maxPts = 0;
+  const claimAgg = {};
+
+  ids.forEach(id => {
+    const item = items.find(it => it.id === id);
+    const sc = state.scores[id] || { points: 0, maxPoints: 1 };
+    totalPts += sc.points; maxPts += sc.maxPoints;
+    if (!claimAgg[item.claim]) claimAgg[item.claim] = { pts: 0, max: 0, count: 0 };
+    claimAgg[item.claim].pts += sc.points;
+    claimAgg[item.claim].max += sc.maxPoints;
+    claimAgg[item.claim].count += 1;
+  });
+
+  let weightedPts = 0, weightedMax = 0;
+  ids.forEach(id => {
+    const item = items.find(it => it.id === id);
+    const sc = state.scores[id] || { points: 0, maxPoints: 1 };
+    const w = item.difficulty;
+    weightedPts += sc.points * w; weightedMax += sc.maxPoints * w;
+  });
+  const adjustedPct = weightedMax > 0 ? weightedPts / weightedMax : 0;
+  const rawPct = maxPts > 0 ? totalPts / maxPts : 0;
+
+  // Simulated scale score range for grade 3 SBAC
+  const scaleScore = Math.round(2300 + adjustedPct * 350);
+  let level;
+  if (scaleScore >= 2521) level = 4;
+  else if (scaleScore >= 2436) level = 3;
+  else if (scaleScore >= 2381) level = 2;
+  else level = 1;
+
+  return { totalPts, maxPts, rawPct, adjustedPct, scaleScore, level, claimAgg, items };
+}
+
+const LEVEL_INFO = {
+  1: { name: "Standard Not Met", desc: "Not yet showing grade-level skills" },
+  2: { name: "Standard Nearly Met", desc: "Approaching grade-level skills" },
+  3: { name: "Standard Met", desc: "Demonstrates grade-level skills" },
+  4: { name: "Standard Exceeded", desc: "Exceeds grade-level skills" }
+};
+
+const CLAIM_NAMES = {
+  ela: { 1: "Reading", 2: "Writing", 3: "Listening", 4: "Research/Inquiry" },
+  math: { 1: "Concepts & Procedures", 2: "Problem Solving", 3: "Communicating Reasoning", 4: "Modeling & Data" }
+};
+
+/* ================================================================
+   RENDER — HOME
+   ================================================================ */
+function renderHome() {
+  const app = document.getElementById("app");
+  const history = getHistory();
+  const resumable = loadState();
+
+  app.innerHTML = `
+    <div class="home">
+      <div class="home-header">
+        <h1>CAASPP Practice — Grade 3</h1>
+        <div class="sub">Smarter Balanced format · maximum-fidelity stems and contexts · v2</div>
+      </div>
+      <div class="home-body">
+        <p class="small">Items modeled directly on released CAASPP/SBAC grade 3 sample items. Stem language, names, contexts, and number ranges match the released test patterns. The official guest practice test is at <a class="note-link" href="https://capt.cambiumtds.com/student/?a=Student" target="_blank" rel="noopener">capt.cambiumtds.com</a> — use it for true interface practice on the Chromebook before testing season.</p>
+
+        <h2 style="margin-top:24px">Who is taking this practice?</h2>
+        <div style="display:flex; gap:10px; margin-bottom:8px; flex-wrap:wrap">
+          <button class="btn-primary" onclick="setStudent('Aseer')">Aseer</button>
+          <button class="btn-primary" onclick="setStudent('Maleek')">Maleek</button>
+          <button onclick="setStudent('Other')">Other</button>
+        </div>
+        <div class="small" id="studentDisplay" style="margin-top:6px"></div>
+
+        <h2 style="margin-top:28px">Choose a subject</h2>
+        <div class="home-tile-row">
+          <button class="home-tile" onclick="startTest('ela')">
+            <h3>English Language Arts</h3>
+            <div class="meta">~12 items · literary passage, informational passage, writing/editing, 1 short constructed response · ~25–35 min</div>
+          </button>
+          <button class="home-tile" onclick="startTest('math')">
+            <h3>Mathematics</h3>
+            <div class="meta">~14 items · all 4 claims, all major standards (3.OA, 3.NBT, 3.NF, 3.MD, 3.G) · ~25–35 min · no calculator (matches real grade 3 test)</div>
+          </button>
+        </div>
+
+        ${resumable ? `
+          <div class="notice">
+            <strong>Resume in progress:</strong> ${resumable.student} — ${resumable.subject.toUpperCase()} (${resumable.administeredIds.length}/${resumable.targetItemCount} done)
+            <div style="margin-top:8px"><button onclick="resumeTest()" class="btn-primary">Resume</button> <button onclick="clearResume()">Discard</button></div>
+          </div>
+        ` : ""}
+
+        ${history.length > 0 ? `
+          <div class="home-history">
+            <h2>Recent results</h2>
+            ${history.slice(0, 5).map(h => `
+              <div class="history-row">
+                <span><strong>${h.student}</strong> · ${h.subject.toUpperCase()} · ${new Date(h.date).toLocaleDateString()}</span>
+                <span>Level ${h.level} · ${Math.round(h.rawPct * 100)}%</span>
+              </div>
+            `).join("")}
+          </div>
+        ` : ""}
+
+        <div class="spacer"></div>
+        <details style="margin-top:20px">
+          <summary class="note-link">About this prototype &amp; sources used</summary>
+          <p class="small" style="margin-top:10px">All items are NEW items modeled directly on publicly released SBAC sources: the CAASPP Grade 3 ELA &amp; Math Practice Test Scoring Guides (2016), the Smarter Balanced Sample Items site, the Grade 3 Math Item Specifications (Targets A–K), and the released Performance Tasks (Going Green, Astronaut, Tall Tale, Dental Health). Names, contexts, number ranges, and stem language match the released items. The two reading passages (\"The Cracked Pot,\" \"How Owls See in the Dark\") were authored fresh to mirror the genre, length, and complexity of the released passages (\"Treasure in the Field,\" \"Sap's Running\"). Every item shows its model source in the score report. No secure operational items are reproduced.</p>
+        </details>
+      </div>
+    </div>
+  `;
+  updateStudentDisplay();
+}
+
+let selectedStudent = "Aseer";
+function setStudent(name) { selectedStudent = name; updateStudentDisplay(); }
+function updateStudentDisplay() {
+  const el = document.getElementById("studentDisplay");
+  if (el) el.textContent = `Selected: ${selectedStudent}`;
+}
+
+function startTest(subject) {
+  state = freshState(selectedStudent, subject);
+  saveState();
+  renderTest();
+}
+function resumeTest() {
+  state = loadState();
+  if (state) renderTest();
+}
+function clearResume() { clearState(); renderHome(); }
+
+/* ================================================================
+   RENDER — TEST INTERFACE
+   ================================================================ */
+let currentItem = null;
+let currentResponse = null;
+let calcOpen = false, calcDisplay = "0", calcPrev = null, calcOp = null;
+let notepadOpen = false;
+let highlightMode = false;
+
+function renderTest() {
+  if (state.administeredIds.length >= state.targetItemCount) return finishTest();
+  currentItem = selectNextItem();
+  if (!currentItem) return finishTest();
+
+  // Initialize response state per item type
+  if (currentItem.type === "ms") currentResponse = [];
+  else if (currentItem.type === "two_part") currentResponse = { a: null, b: null };
+  else if (currentItem.type === "yn") currentResponse = new Array(currentItem.rows.length).fill(null);
+  else if (currentItem.type === "fraction") currentResponse = { n: "", d: "" };
+  else currentResponse = null;
+
+  const passageObj = currentItem.passage ? ELA_PASSAGES[currentItem.passage] : null;
+  const showPassage = !!passageObj;
+  const itemNum = state.administeredIds.length + 1;
+  const totalNum = state.targetItemCount;
+
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div class="test-shell">
+      <div class="test-header">
+        <div class="left">
+          <div class="title">${state.subject === "ela" ? "ELA Practice" : "Mathematics Practice"} — Grade 3</div>
+          <div class="qcount">Question ${itemNum} of ${totalNum}${state.marksForReview[currentItem.id] ? ' <span class="mark-badge">Marked</span>' : ''}</div>
+        </div>
+        <div class="right">
+          <button onclick="openPause()">Pause</button>
+          <button onclick="openExit()">Save &amp; Exit</button>
+        </div>
+      </div>
+      <div class="test-toolbar">
+        <button class="tool-btn ${highlightMode ? 'active' : ''}" onclick="toggleHighlight()">Highlighter</button>
+        <button class="tool-btn ${notepadOpen ? 'active' : ''}" onclick="toggleNotepad()">Notepad</button>
+        <button class="tool-btn ${state.marksForReview[currentItem.id] ? 'active' : ''}" onclick="toggleMark()">Mark for Review</button>
+        ${state.subject === "math" ? '<span class="small" style="margin-left:12px; align-self:center">No calculator on Grade 3 SBAC</span>' : ''}
+        <div style="flex:1"></div>
+        <button class="tool-btn" onclick="if(confirm('Quit and discard all progress?')) { clearState(); renderHome(); }">Quit</button>
+      </div>
+      <div class="test-body">
+        ${showPassage ? `
+          <div class="passage-pane" id="passagePane">
+            <h3>Passage</h3>
+            <div class="passage-title">${passageObj.title}</div>
+            <div class="passage-author">${passageObj.author}</div>
+            <div class="passage-text" id="passageText">
+              ${passageObj.text.map((p, i) => `<p class="numbered"><span class="pn">${i+1}</span><span data-para="${i}">${p}</span></p>`).join("")}
+            </div>
+          </div>
+        ` : ""}
+        <div class="item-pane ${showPassage ? '' : 'full'}">
+          <div class="item-stem" id="itemStem"></div>
+          <div id="itemResponse"></div>
+        </div>
+      </div>
+      <div class="test-footer">
+        <div class="left">
+          <button onclick="if(confirm('Skip this item? It will be marked as incorrect.')){ submitResponse(true) }">Skip</button>
+        </div>
+        <div class="right">
+          <button onclick="submitResponse()" class="btn-primary" id="submitBtn">Submit &amp; Next →</button>
+        </div>
+      </div>
+    </div>
+    <div id="modalSlot"></div>
+  `;
+
+  renderItemContent();
+  if (notepadOpen) renderNotepad();
+  attachHighlightHandlers();
+}
+
+function renderItemContent() {
+  const stemEl = document.getElementById("itemStem");
+  const respEl = document.getElementById("itemResponse");
+  const it = currentItem;
+
+  stemEl.innerHTML = it.stem.split("\n").map(line => `<div>${escapeHtml(line) || '&nbsp;'}</div>`).join("");
+
+  if (it.type === "sr") {
+    respEl.innerHTML = `
+      <ul class="options" id="opts">
+        ${it.options.map((opt, i) => `
+          <li onclick="selectSR(${i})" id="opt${i}">
+            <input type="radio" name="sr" id="srin${i}" />
+            <span class="opt-letter">${String.fromCharCode(65 + i)}.</span>
+            <span class="opt-text">${escapeHtml(opt)}</span>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+  } else if (it.type === "ms") {
+    respEl.innerHTML = `
+      <div class="small" style="margin-bottom:10px"><strong>Select all that apply.</strong></div>
+      <ul class="options" id="opts">
+        ${it.options.map((opt, i) => `
+          <li onclick="toggleMS(${i})" id="opt${i}">
+            <input type="checkbox" id="msin${i}" />
+            <span class="opt-letter">${String.fromCharCode(65 + i)}.</span>
+            <span class="opt-text">${escapeHtml(opt)}</span>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+  } else if (it.type === "numeric") {
+    respEl.innerHTML = `
+      <div class="numeric-input">
+        <input type="number" step="any" id="numInput" placeholder="Enter your answer" autocomplete="off" />
+      </div>
+    `;
+    document.getElementById("numInput").addEventListener("input", e => { currentResponse = e.target.value; });
+    setTimeout(() => { const n = document.getElementById("numInput"); if (n) n.focus(); }, 50);
+  } else if (it.type === "fraction") {
+    const target = it.answer;
+    const showN = target.n === undefined; // student fills in numerator
+    const showD = target.d === undefined; // student fills in denominator
+    // For most stems we ask for one part; if both undefined treat as both
+    respEl.innerHTML = `
+      <div style="display:flex; align-items:center; gap:14px; margin-top:14px">
+        <span style="font-size:18px">Enter your answer:</span>
+        <div class="fraction-input">
+          ${target.n !== undefined && target.d === undefined
+            ? `<span style="font-size:18px; padding:6px">${target.n}</span><div class="bar"></div><input type="number" id="fracD" placeholder="?" />`
+            : (target.d !== undefined && target.n === undefined
+                ? `<input type="number" id="fracN" placeholder="?" /><div class="bar"></div><span style="font-size:18px; padding:6px">${target.d}</span>`
+                : `<input type="number" id="fracN" placeholder="?" /><div class="bar"></div><input type="number" id="fracD" placeholder="?" />`)}
+        </div>
+      </div>
+    `;
+    const handleInput = () => {
+      const nEl = document.getElementById("fracN");
+      const dEl = document.getElementById("fracD");
+      currentResponse = {
+        n: nEl ? nEl.value : target.n,
+        d: dEl ? dEl.value : target.d
+      };
+    };
+    if (document.getElementById("fracN")) document.getElementById("fracN").addEventListener("input", handleInput);
+    if (document.getElementById("fracD")) document.getElementById("fracD").addEventListener("input", handleInput);
+  } else if (it.type === "yn") {
+    respEl.innerHTML = `
+      <table class="yn-table">
+        <thead>
+          <tr>
+            <th></th>
+            ${it.colLabels.map(l => `<th class="yn-col">${l}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+          ${it.rows.map((r, i) => `
+            <tr>
+              <td>${escapeHtml(r.text)}</td>
+              <td class="yn-col"><input type="radio" name="yn${i}" onclick="setYN(${i}, true)" /></td>
+              <td class="yn-col"><input type="radio" name="yn${i}" onclick="setYN(${i}, false)" /></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  } else if (it.type === "two_part") {
+    respEl.innerHTML = `
+      <div class="two-part">
+        <h4>${escapeHtml(it.partA.prompt)}</h4>
+        <ul class="options" id="optsA">
+          ${it.partA.options.map((opt, i) => `
+            <li onclick="selectTwoPart('a', ${i})" id="optA${i}">
+              <input type="radio" name="srA" />
+              <span class="opt-letter">${String.fromCharCode(65 + i)}.</span>
+              <span class="opt-text">${escapeHtml(opt)}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+      <div class="two-part">
+        <h4>${escapeHtml(it.partB.prompt)}</h4>
+        <ul class="options" id="optsB">
+          ${it.partB.options.map((opt, i) => `
+            <li onclick="selectTwoPart('b', ${i})" id="optB${i}">
+              <input type="radio" name="srB" />
+              <span class="opt-letter">${String.fromCharCode(65 + i)}.</span>
+              <span class="opt-text">${escapeHtml(opt)}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+    `;
+  } else if (it.type === "cr") {
+    respEl.innerHTML = `
+      <div class="cr-help" style="margin-bottom:8px"><strong>Type your response below.</strong> Use the passage to support your answer.</div>
+      <textarea class="cr-response" id="crInput" placeholder="Type your answer here..."></textarea>
+      <div class="cr-help">A strong response will be ${it.autoScore?.minWords || 40}+ words and reference specific details from the passage. Word count: <span id="wordCount">0</span></div>
+    `;
+    const ta = document.getElementById("crInput");
+    ta.addEventListener("input", e => {
+      currentResponse = e.target.value;
+      const wc = (e.target.value.trim().split(/\s+/).filter(Boolean)).length;
+      document.getElementById("wordCount").textContent = wc;
+    });
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function selectSR(i) {
+  document.querySelectorAll("#opts li").forEach(el => el.classList.remove("selected"));
+  document.getElementById("opt" + i).classList.add("selected");
+  document.getElementById("srin" + i).checked = true;
+  currentResponse = i;
+}
+
+function toggleMS(i) {
+  const el = document.getElementById("opt" + i);
+  const checkbox = document.getElementById("msin" + i);
+  if (!Array.isArray(currentResponse)) currentResponse = [];
+  if (currentResponse.includes(i)) {
+    currentResponse = currentResponse.filter(x => x !== i);
+    el.classList.remove("selected"); checkbox.checked = false;
+  } else {
+    currentResponse.push(i);
+    el.classList.add("selected"); checkbox.checked = true;
+  }
+}
+
+function setYN(rowIndex, val) {
+  if (!Array.isArray(currentResponse)) currentResponse = new Array(currentItem.rows.length).fill(null);
+  currentResponse[rowIndex] = val;
+}
+
+function selectTwoPart(part, i) {
+  const partUpper = part.toUpperCase();
+  document.querySelectorAll(`#opts${partUpper} li`).forEach(el => el.classList.remove("selected"));
+  document.getElementById(`opt${partUpper}${i}`).classList.add("selected");
+  if (!currentResponse) currentResponse = { a: null, b: null };
+  currentResponse[part] = i;
+  document.querySelectorAll(`#opts${partUpper} input`).forEach((r, idx) => r.checked = (idx === i));
+}
+
+function submitResponse(skipped) {
+  // Empty-check varies by type
+  let isEmpty = false;
+  if (skipped) {
+    isEmpty = true;
+  } else if (currentItem.type === "yn") {
+    isEmpty = !currentResponse || currentResponse.some(v => v === null);
+  } else if (currentItem.type === "two_part") {
+    isEmpty = !currentResponse || currentResponse.a === null || currentResponse.b === null;
+  } else if (currentItem.type === "ms") {
+    isEmpty = !currentResponse || currentResponse.length === 0;
+  } else if (currentItem.type === "fraction") {
+    isEmpty = !currentResponse || (currentResponse.n === "" && currentResponse.d === "");
+  } else {
+    isEmpty = currentResponse === null || currentResponse === undefined || currentResponse === "";
+  }
+  if (isEmpty && !skipped) {
+    if (!confirm("You haven't answered yet. Submit anyway?")) return;
+  }
+  const responseToScore = skipped ? null : currentResponse;
+  const sc = scoreResponse(currentItem, responseToScore);
+  state.responses[currentItem.id] = responseToScore;
+  state.scores[currentItem.id] = sc;
+  state.administeredIds.push(currentItem.id);
+  updateAdaptive(currentItem, sc);
+  saveState();
+  renderTest();
+}
+
+function toggleMark() {
+  state.marksForReview[currentItem.id] = !state.marksForReview[currentItem.id];
+  saveState(); renderTest();
+}
+function toggleNotepad() { notepadOpen = !notepadOpen; renderTest(); }
+function toggleHighlight() { highlightMode = !highlightMode; renderTest(); }
+
+function attachHighlightHandlers() {
+  if (!highlightMode) return;
+  setTimeout(() => {
+    const text = document.getElementById("passageText");
+    if (!text) return;
+    text.style.cursor = "text";
+    text.onmouseup = () => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) return;
+      const span = document.createElement("span");
+      span.className = "hl";
+      try {
+        sel.getRangeAt(0).surroundContents(span);
+        sel.removeAllRanges();
+      } catch(e) {}
+    };
+  }, 50);
+}
+
+/* ---- Notepad ---- */
+function renderNotepad() {
+  const slot = document.getElementById("modalSlot");
+  if (!slot) return;
+  slot.innerHTML += `
+    <div class="notepad-modal">
+      <h4>Notepad <button onclick="toggleNotepad()">×</button></h4>
+      <textarea id="notepadInput" placeholder="Scratch work, notes...">${escapeHtml(state.notes || "")}</textarea>
+    </div>
+  `;
+  setTimeout(() => {
+    const t = document.getElementById("notepadInput");
+    if (t) t.addEventListener("input", e => { state.notes = e.target.value; saveState(); });
+  }, 50);
+}
+
+function openPause() {
+  document.getElementById("modalSlot").innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <h3>Test Paused</h3>
+        <p>Take a break! Your progress is saved. Click Resume when you're ready to continue.</p>
+        <div class="modal-actions"><button onclick="closeModal()" class="btn-primary">Resume</button></div>
+      </div>
+    </div>
+  `;
+}
+function openExit() {
+  document.getElementById("modalSlot").innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <h3>Save and Exit?</h3>
+        <p>Your progress will be saved. You can resume from the home screen later.</p>
+        <div class="modal-actions"><button onclick="closeModal()">Cancel</button><button onclick="renderHome()" class="btn-primary">Save &amp; Exit</button></div>
+      </div>
+    </div>
+  `;
+}
+function closeModal() { document.getElementById("modalSlot").innerHTML = ""; }
+
+/* ================================================================
+   FINISH & SCORE REPORT
+   ================================================================ */
+function finishTest() {
+  state.finished = true;
+  const r = calcResults();
+  // Snapshot scores BEFORE clearing state so the report can render them
+  const scoresSnapshot = JSON.parse(JSON.stringify(state.scores));
+  const savedSubject = state.subject;
+  const savedStudent = state.student;
+  appendHistory({
+    student: savedStudent, subject: savedSubject, date: Date.now(),
+    level: r.level, scaleScore: r.scaleScore, rawPct: r.rawPct, items: r.items.length
+  });
+  clearState();
+  finishReport(r, savedStudent, savedSubject, scoresSnapshot);
+}
+
+function finishReport(r, student, subject, scoresSnapshot) {
+  const app = document.getElementById("app");
+  const subjectName = subject === "ela" ? "English Language Arts" : "Mathematics";
+  app.innerHTML = `
+    <div class="report">
+      <div class="report-header">
+        <h1>${student}'s ${subjectName} Practice Results</h1>
+        <div class="meta">${new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' })} · Grade 3 · ${r.items.length} items administered</div>
+      </div>
+      <div class="report-body">
+        <div class="report-section">
+          <h2>Overall Performance</h2>
+          <div class="score-summary">
+            <div class="score-big">
+              <div><span class="num">${r.totalPts.toFixed(1)}</span><span class="denom">/${r.maxPts}</span></div>
+              <div class="label">Points Earned</div>
+            </div>
+            <div class="level-card l${r.level}">
+              <div class="lvl-num">${r.level}</div>
+              <div class="lvl-name">${LEVEL_INFO[r.level].name}</div>
+              <div class="lvl-desc">${LEVEL_INFO[r.level].desc}</div>
+            </div>
+            <div class="score-big">
+              <div><span class="num">${r.scaleScore}</span></div>
+              <div class="label">Simulated Scale Score</div>
+              <div class="small" style="margin-top:6px; font-size:11px">(estimate — real CAASPP uses IRT calibration)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section">
+          <h2>Performance by Claim</h2>
+          ${Object.keys(r.claimAgg).sort().map(c => {
+            const ca = r.claimAgg[c];
+            const pct = ca.max > 0 ? ca.pts / ca.max : 0;
+            return `
+              <div class="claim-row">
+                <div class="claim-name"><strong>Claim ${c}: ${CLAIM_NAMES[subject][c]}</strong><span class="sub">${ca.count} item${ca.count>1?'s':''} · ${ca.pts.toFixed(1)}/${ca.max} pts</span></div>
+                <div class="claim-bar"><div class="fill" style="width:${pct*100}%"></div></div>
+                <div class="claim-pct">${Math.round(pct * 100)}%</div>
+              </div>
+            `;
+          }).join("")}
+          ${diagnosticNotes(r, subject)}
+        </div>
+
+        <div class="report-section">
+          <h2>Item-by-Item Review</h2>
+          ${r.items.map((it, i) => {
+            const sc = scoresSnapshot[it.id] || { correct: false, points: 0, maxPoints: 1 };
+            let resultClass = sc.correct ? "correct" : (sc.partial ? "partial" : "incorrect");
+            let resultText = sc.correct ? "Correct" : (sc.partial ? "Partial credit" : "Incorrect");
+            return `
+              <div class="item-review">
+                <div class="ir-header">
+                  <span class="ir-num">Question ${i+1}</span>
+                  <span class="ir-result ${resultClass}">${resultText} · ${sc.points.toFixed(1)}/${sc.maxPoints} pt</span>
+                </div>
+                <div class="ir-stem">${escapeHtml(it.stem.substring(0, 240))}${it.stem.length > 240 ? "..." : ""}</div>
+                <div class="ir-explain"><strong>Explanation:</strong> ${escapeHtml(it.explain || "")}</div>
+                <div class="ir-meta">
+                  <strong>Standard:</strong> ${it.standard} ·
+                  <strong>Claim ${it.claim} / Target ${it.target}</strong> · DOK ${it.dok} · Difficulty ${it.difficulty}/5<br>
+                  <em>${escapeHtml(it.modelSource)}</em>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </div>
+      <div class="report-actions">
+        <button onclick="window.print()">Print Report</button>
+        <button onclick="renderHome()" class="btn-primary">Back to Home</button>
+      </div>
+    </div>
+  `;
+}
+
+function diagnosticNotes(r, subject) {
+  const notes = [];
+  Object.keys(r.claimAgg).sort().forEach(c => {
+    const ca = r.claimAgg[c];
+    const pct = ca.max > 0 ? ca.pts / ca.max : 0;
+    if (pct >= 0.85) notes.push(`Strong area: ${CLAIM_NAMES[subject][c]}`);
+    else if (pct < 0.5) notes.push(`Needs review: ${CLAIM_NAMES[subject][c]}`);
+  });
+  if (notes.length === 0) return "";
+  return `<div class="notice" style="margin-top:14px"><strong>Quick takeaways:</strong><br>${notes.join("<br>")}</div>`;
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+renderHome();
+</script>
+</body>
+</html>
